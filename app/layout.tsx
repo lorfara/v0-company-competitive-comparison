@@ -1,13 +1,13 @@
-import type { Metadata } from 'next'
-import { Geist, Geist_Mono } from 'next/font/google'
+import type { Metadata, Viewport } from 'next'
+import { Inter, JetBrains_Mono } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
 
-const _geist = Geist({ subsets: ["latin"] });
-const _geistMono = Geist_Mono({ subsets: ["latin"] });
+const _inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
+const _jetbrainsMono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-jetbrains-mono" });
 
 export const metadata: Metadata = {
-  title: 'Competitor Analysis - AI-Powered Company Comparison',
+  title: 'CompareAI - AI-Powered Competitive Intelligence',
   description: 'Compare two companies side-by-side using AI. Get instant competitive intelligence powered by GPT-4o-mini.',
   generator: 'v0.app',
   icons: {
@@ -29,13 +29,17 @@ export const metadata: Metadata = {
   },
 }
 
+export const viewport: Viewport = {
+  themeColor: '#1a2332',
+}
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${_inter.variable} ${_jetbrainsMono.variable}`}>
       <body className="font-sans antialiased">
         {children}
         <Analytics />

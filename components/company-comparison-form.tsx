@@ -4,7 +4,6 @@ import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Building2, Key, Loader2, ArrowRight } from "lucide-react"
 
 interface CompanyComparisonFormProps {
@@ -23,88 +22,85 @@ export function CompanyComparisonForm({
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     if (!company1.trim() || !company2.trim() || !apiKey.trim()) return
-    console.log("[v0] Form submitted with companies:", company1, "vs", company2)
-    console.log("[v0] API key provided (first 8 chars):", apiKey.slice(0, 8) + "...")
     onSubmit(company1.trim(), company2.trim(), apiKey.trim())
   }
 
   const isValid = company1.trim() && company2.trim() && apiKey.trim()
 
   return (
-    <Card className="w-full border-border/50 bg-card">
-      <CardHeader>
-        <CardTitle className="text-xl font-semibold tracking-tight">
+    <div className="rounded-xl border border-border/60 bg-card p-6 sm:p-8">
+      <div className="flex flex-col gap-1 pb-6">
+        <h2 className="text-lg font-semibold tracking-tight text-card-foreground">
           Compare Companies
-        </CardTitle>
-        <CardDescription className="text-muted-foreground">
-          Enter two company names and your OpenAI API key to generate a detailed
-          competitive analysis.
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
-        <form onSubmit={handleSubmit} className="flex flex-col gap-5">
-          <div className="grid gap-5 sm:grid-cols-2">
-            <div className="flex flex-col gap-2">
-              <Label
-                htmlFor="company1"
-                className="flex items-center gap-2 text-sm font-medium"
-              >
-                <Building2 className="h-3.5 w-3.5 text-muted-foreground" />
-                Company Name 1
-              </Label>
-              <Input
-                id="company1"
-                placeholder="e.g. Apple"
-                value={company1}
-                onChange={(e) => setCompany1(e.target.value)}
-                disabled={isLoading}
-                className="bg-background"
-              />
-            </div>
-            <div className="flex flex-col gap-2">
-              <Label
-                htmlFor="company2"
-                className="flex items-center gap-2 text-sm font-medium"
-              >
-                <Building2 className="h-3.5 w-3.5 text-muted-foreground" />
-                Company Name 2
-              </Label>
-              <Input
-                id="company2"
-                placeholder="e.g. Samsung"
-                value={company2}
-                onChange={(e) => setCompany2(e.target.value)}
-                disabled={isLoading}
-                className="bg-background"
-              />
-            </div>
+        </h2>
+        <p className="text-sm text-muted-foreground">
+          Enter two company names and your OpenAI API key to begin.
+        </p>
+      </div>
+      <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+        <div className="grid gap-5 sm:grid-cols-2">
+          <div className="flex flex-col gap-2">
+            <Label
+              htmlFor="company1"
+              className="flex items-center gap-2 text-xs font-medium uppercase tracking-wider text-muted-foreground"
+            >
+              <Building2 className="h-3 w-3" />
+              Company 1
+            </Label>
+            <Input
+              id="company1"
+              placeholder="e.g. Apple"
+              value={company1}
+              onChange={(e) => setCompany1(e.target.value)}
+              disabled={isLoading}
+              className="border-border/60 bg-background placeholder:text-muted-foreground/40"
+            />
           </div>
           <div className="flex flex-col gap-2">
             <Label
-              htmlFor="apiKey"
-              className="flex items-center gap-2 text-sm font-medium"
+              htmlFor="company2"
+              className="flex items-center gap-2 text-xs font-medium uppercase tracking-wider text-muted-foreground"
             >
-              <Key className="h-3.5 w-3.5 text-muted-foreground" />
-              OpenAI API Key
+              <Building2 className="h-3 w-3" />
+              Company 2
             </Label>
             <Input
-              id="apiKey"
-              type="password"
-              placeholder="sk-..."
-              value={apiKey}
-              onChange={(e) => setApiKey(e.target.value)}
+              id="company2"
+              placeholder="e.g. Samsung"
+              value={company2}
+              onChange={(e) => setCompany2(e.target.value)}
               disabled={isLoading}
-              className="bg-background font-mono text-sm"
+              className="border-border/60 bg-background placeholder:text-muted-foreground/40"
             />
-            <p className="text-xs text-muted-foreground">
-              Your API key is sent directly to OpenAI and never stored.
-            </p>
           </div>
+        </div>
+        <div className="flex flex-col gap-2">
+          <Label
+            htmlFor="apiKey"
+            className="flex items-center gap-2 text-xs font-medium uppercase tracking-wider text-muted-foreground"
+          >
+            <Key className="h-3 w-3" />
+            OpenAI API Key
+          </Label>
+          <Input
+            id="apiKey"
+            type="password"
+            placeholder="sk-..."
+            value={apiKey}
+            onChange={(e) => setApiKey(e.target.value)}
+            disabled={isLoading}
+            className="border-border/60 bg-background font-mono text-sm placeholder:text-muted-foreground/40"
+          />
+          <p className="text-[11px] text-muted-foreground/60">
+            Sent directly to OpenAI. Never stored on our servers.
+          </p>
+        </div>
+        <div className="flex justify-end pt-1">
           <Button
             type="submit"
             disabled={!isValid || isLoading}
-            className="w-full sm:w-auto sm:self-end"
             size="lg"
+            className="bg-primary text-primary-foreground hover:bg-primary/90 disabled:opacity-40"
           >
             {isLoading ? (
               <>
@@ -113,13 +109,13 @@ export function CompanyComparisonForm({
               </>
             ) : (
               <>
-                Compare
+                Run Analysis
                 <ArrowRight className="h-4 w-4" />
               </>
             )}
           </Button>
-        </form>
-      </CardContent>
-    </Card>
+        </div>
+      </form>
+    </div>
   )
 }
