@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/table"
 import { ArrowLeftRight } from "lucide-react"
 import type { ComparisonData } from "@/lib/openai"
+import { FeedbackForm } from "@/components/feedback-form"
 
 interface ComparisonResultProps {
   data: ComparisonData
@@ -128,6 +129,11 @@ export function ComparisonResult({
           )}
         </CardContent>
       </Card>
+
+      {/* Feedback Form - appears after analysis results */}
+      <div className="mt-8">
+        <FeedbackForm />
+      </div>
     </div>
   )
 }
