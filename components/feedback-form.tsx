@@ -81,6 +81,7 @@ export function FeedbackForm() {
       })
 
       if (error) {
+        console.log("[v0] Feedback submission error:", error)
         throw error
       }
 
@@ -94,7 +95,8 @@ export function FeedbackForm() {
         message: "",
       })
       setErrors({})
-    } catch {
+    } catch (err) {
+      console.log("[v0] Error details:", err)
       toast.error("Failed to submit feedback. Please try again.")
     } finally {
       setIsSubmitting(false)
